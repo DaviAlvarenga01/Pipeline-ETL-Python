@@ -20,9 +20,9 @@ class PDFTableExtractor:
     def start():
         logging.info(f"Start pdf - {self.file_name}")
         
-        header = self.get_table_detail()
-        main = self.get_table_data()
-        small = self.get_table_data()
+        header = self.get_table_detail(self.configs["header_tables_areas"], self.configs["header_columns"], self.configs["header_fix"])
+        main = self.get_table_data(self.configs["tables_areas"], self.configs["columns"], self.configs["header_fix"])
+        small = self.get_table_data(self.configs["small_tables_areas"], self.configs["small_columns"], self.configs["small_fix"])
         
         main = self.add_infos(header, main) 
         small = self.add_infos(header, small)
@@ -37,6 +37,8 @@ class PDFTableExtractor:
         self.send_to_db(main, f"Fatura_{self.configs['name']}".lower())
         self.send_to_db(small, f"Fatura_{self.configs['name']}_small".lower())
         
+        return {"main": main, "small": small}
+    
              
     def get_table_data(self, t_area, t_columns):
         tables = camelot.read_pdf(
