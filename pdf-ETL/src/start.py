@@ -3,7 +3,7 @@ import camelot
 import pandas as pd
 import logging
 from unidecode import unidecode
-from configs.rules.notas import rules_dict
+from configs.rules.regras import rules_dict
 from configs.tools.postgre import RDSPostgreSQLManager
 
 logging.basicConfig(level=logging.INFO)
